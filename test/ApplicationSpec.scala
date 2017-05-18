@@ -6,7 +6,7 @@ import play.api.mvc._
 import play.api.test._
 import play.api.test.Helpers._
 
-class ExampleControllerSpec extends PlaySpec with Results {
+class HomeController extends PlaySpec with Results {
 
   "Example Page#index" should {
     "should be valid" in {
