@@ -18,7 +18,7 @@ class HomeController @Inject() extends Controller {
    * a path of `/`.
    */
   def index = Action {
-    Ok("hola pendejos mios")
+    Ok("hola pendejos mios 2")
   }
 
 }
