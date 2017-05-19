@@ -6,6 +6,8 @@ import model.SearchFlight
 import play.api.libs.json._
 
 
+import play.api.db._
+
 class ModelSpec extends PlaySpec {
 
   "Fligth test class to json" should {
