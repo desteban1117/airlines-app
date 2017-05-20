@@ -27,9 +27,11 @@ class ConectionSpec extends PlaySpec {
           while (rs.next()) {
             outString = rs.getString("id").toInt
           }
+          conn.close()
         } finally {
           conn.close()
         }
+        conn.close()
         outString mustBe 2
       }
     }
