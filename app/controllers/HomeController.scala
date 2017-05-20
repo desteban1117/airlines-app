@@ -53,9 +53,12 @@ class HomeController @Inject() extends Controller {
     } finally {
       conn.close()
     }
-
-     val jsonflights = Json.toJson(flights)
-    Ok(jsonflights)
+    val jsonAnswer = Json.arr(
+    	Json.obj("airline"->Airline("1117","chan","xxx")),
+    	Json.obj("result"->flights)
+    	) 
+    val jsonflights = Json.toJson(flights)
+    Ok(jsonAnswer)
 
   }
 
