@@ -1,4 +1,4 @@
-
+/*
 import org.scalatestplus.play._
 
 import model.Flight
@@ -93,5 +93,5 @@ class ModelSpec extends PlaySpec {
   }
 
 }
-
+*/
 //case class SearchFlight(departureDate: String,arrivalDate: String,origin: String,destination: String,passengers: Int,roundTrip: String)
