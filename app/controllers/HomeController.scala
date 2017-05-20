@@ -45,7 +45,7 @@ class HomeController @Inject() extends Controller {
       val rs = stmt.executeQuery("SELECT * FROM flight WHERE origin = '"+searchFlight.origin+"' AND destination = '"+searchFlight.destination+"' AND departure_date = '"+searchFlight.departureDate+"' AND passengers >= "+searchFlight.passengers)
 
       while (rs.next()) {
-        var flight = Flight(rs.getString("id"),rs.getString("origin"),rs.getString("destination"),rs.getString("price"), rs.getString("currency"), rs.getString("departure_date"), rs.getString("arrival_date"), rs.getString("passengers"), rs.getString("hour") )
+        var flight = Flight(rs.getString("id"),rs.getString("origin"),rs.getString("destination"),rs.getString("price"), rs.getString("currency"), rs.getString("hour") +" "+ rs.getString("departure_date"), rs.getString("arrival_date"), rs.getString("passengers"))
 
 
         flights += flight
