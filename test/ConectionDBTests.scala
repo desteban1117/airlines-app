@@ -30,7 +30,7 @@ class ConectionSpec extends PlaySpec {
         } finally {
           conn.close()
         }
-        outString mustBe 1
+        outString mustBe 2
       }
     }
 }
