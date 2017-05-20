@@ -27,6 +27,15 @@ class HomeController @Inject() extends Controller {
     Ok("hola muchachos 2")
   }
 
+  implicit class RichResult (result: Result) {
+  def enableCors =  result.withHeaders(
+    "Access-Control-Allow-Origin" -> "*"
+    , "Access-Control-Allow-Methods" -> "OPTIONS, GET, POST, PUT, DELETE, HEAD"   // OPTIONS for pre-flight
+    , "Access-Control-Allow-Headers" -> "Accept, Content-Type, Origin, X-Json, X-Prototype-Version, X-Requested-With" //, "X-My-NonStd-Option"
+    , "Access-Control-Allow-Credentials" -> "true"
+  )
+}
+
   def search = Action { implicit request =>
 
     val json = Json.toJson(request.body.asJson)
@@ -53,12 +62,9 @@ class HomeController @Inject() extends Controller {
     } finally {
       conn.close()
     }
-    val jsonAnswer = Json.arr(
-    	Json.obj("airline"->Airline("1117","chan","xxx")),
-    	Json.obj("result"->flights)
-    	) 
-    val jsonflights = Json.toJson(flights)
-    Ok(jsonAnswer)
+    val jsonNormal =  Json.obj("airline"->Airline("1117","chan","xxx"),
+                                "result"->flights)
+    Ok(jsonNormal).enableCors
 
   }
 
