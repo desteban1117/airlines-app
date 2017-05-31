@@ -58,10 +58,13 @@ class HomeController @Inject() extends Controller {
 
 
         flights += flight
+        
       }
+      conn.close()
     } finally {
       conn.close()
     }
+    //conn.close()
     val jsonNormal =  Json.obj("airline"->Airline("1117","chan","xxx"),
                                 "result"->flights)
     Ok(jsonNormal).enableCors
