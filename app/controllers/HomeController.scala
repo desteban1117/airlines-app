@@ -6,6 +6,7 @@ import play.api.mvc._
 import play.api.libs.json._
 import model.Flight
 import model.SearchFlight
+import model.Reserve
 import play.api.db._
 import play.api.db.Databases
 import scala.collection.mutable.ListBuffer
@@ -65,6 +66,38 @@ class HomeController @Inject() extends Controller {
     val jsonNormal =  Json.obj("airline"->Airline("1117","chan","xxx"),
                                 "result"->flights)
     Ok(jsonNormal).enableCors
+
+  }
+
+
+
+   def reserve = Action { implicit request =>
+
+    val json = Json.toJson(request.body.asJson)
+    val createReserve = json.validate[Reserve].get
+
+    val db = Databases(
+      driver = "org.postgresql.Driver",
+      url = "jdbc:postgresql://ec2-54-83-49-44.compute-1.amazonaws.com:5432/d4knfn1f5q4rac?user=lfvvtprsytbqlr&password=22ed3b05700ea24f010b53fb45211e9cd6d943f0a0550f3f03aeab57fdae3cbb&sslmode=require"
+
+    )
+    val conn = db.getConnection()
+
+    try {
+      val stmt = conn.createStatement
+      //val rs = stmt.executeQuery("SELECT * FROM flight WHERE origin = '"+searchFlight.origin+"' AND destination = '"+searchFlight.destination+"' AND departure_date = '"+searchFlight.departureDate+"' AND passengers >= "+searchFlight.passengers)
+      //insert into reserve(user_name,flightCode,passengers) values('Andres','1',2);
+      val rs = stmt.executeUpdate("INSERT INTO reserve(user_name,flightCode,passengers) VALUES('"+createReserve.username+"','"+createReserve.flightCode+"',"+createReserve.passengers+");")  
+      //while (rs.next()) {
+        //var flight = Flight(rs.getString("id"),rs.getString("origin"),rs.getString("destination"),rs.getString("price"), rs.getString("currency"), rs.getString("hour") +" "+ rs.getString("departure_date"), rs.getString("arrival_date"), rs.getString("passengers"))
+
+
+        //flights += flight
+      //}
+    } finally {
+      conn.close()
+    }
+    Ok("ta bem").enableCors
 
   }
 
