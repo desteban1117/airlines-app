@@ -9,6 +9,11 @@ import model.SearchFlight
 import play.api.db._
 import play.api.db.Databases
 import scala.collection.mutable.ListBuffer
+import java.io.InputStream
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
+import com.google.firebase.database._
+import java.io.FileInputStream
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -58,7 +63,7 @@ class HomeController @Inject() extends Controller {
 
 
         flights += flight
-        
+
       }
       conn.close()
     } finally {
@@ -68,6 +73,34 @@ class HomeController @Inject() extends Controller {
     val jsonNormal =  Json.obj("airline"->Airline("1117","chan","xxx"),
                                 "result"->flights)
     Ok(jsonNormal).enableCors
+
+  }
+
+
+  def reservar  = Action { implicit request =>
+
+
+    object Firebase {
+      /*
+      private val credentials : InpuStream = getClass.getResourceAsStream("/airline-chan-firebase-adminsdk-99fgo-6acba9f607.json")
+      private val options = new FirebaseOptions.Builder()
+        .setServiceAccount(credentials)
+        .setDatabaseUrl("https://airline-chan.firebaseio.com")
+        .build()
+      FirebaseApp.initializeApp(options)*/
+
+      FileInputStream serviceAccount = new FileInputStream("path/to/serviceAccountKey.json");
+
+      FirebaseOptions options = new FirebaseOptions.Builder()
+        .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
+        .setDatabaseUrl("https://airline-chan.firebaseio.com")
+        .build();
+
+      FirebaseApp.initializeApp(options);
+    }
+
+    val json = Json.toJson(request.body.asJson)
+    Ok((json \ "token").as[String])
 
   }
 

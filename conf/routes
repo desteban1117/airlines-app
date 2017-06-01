@@ -6,5 +6,7 @@
 GET     /                           controllers.HomeController.index()
 OPTIONS /							controllers.HomeController.index()
 POST    /chan/search                controllers.HomeController.search
+
+POST    /chan/reservar              controllers.HomeController.reservar
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

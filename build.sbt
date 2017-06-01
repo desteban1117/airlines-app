@@ -13,3 +13,4 @@ libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.0
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.5.14"
 libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1201-jdbc41"
 libraryDependencies += filters
+libraryDependencies += "com.google.firebase" % "firebase-server-sdk" % "3.0.1"

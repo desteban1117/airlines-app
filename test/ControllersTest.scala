@@ -39,4 +39,19 @@ class HomeControllerSpec extends PlaySpec with Results {
       json mustBe jsonResult
     }
   }*/
+
+  "json text" should {
+    "should be valid" in {
+      val jsonResult = Json.obj(
+        "fligthtCode"-> "06",
+        "passengers"-> 2,
+        "token"-> "hola"
+      )
+      val controller = new HomeController()
+      val result: Future[Result] = controller.reservar.apply(FakeRequest(POST, "/").withJsonBody(jsonResult))
+      val json  = contentAsString(result)
+      json mustBe "hola"
+    }
+  }
+
 }
