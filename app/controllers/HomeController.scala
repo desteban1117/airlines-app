@@ -79,9 +79,9 @@ class HomeController @Inject() extends Controller {
 
   def reservar  = Action { implicit request =>
 
-
+/*
     object Firebase {
-      /*
+
       private val credentials : InpuStream = getClass.getResourceAsStream("/airline-chan-firebase-adminsdk-99fgo-6acba9f607.json")
       private val options = new FirebaseOptions.Builder()
         .setServiceAccount(credentials)
