@@ -88,7 +88,7 @@ class HomeController @Inject() extends Controller {
         .setDatabaseUrl("https://airline-chan.firebaseio.com")
         .build()
       FirebaseApp.initializeApp(options)*/
-
+/*
       FileInputStream serviceAccount = new FileInputStream("path/to/serviceAccountKey.json");
 
       FirebaseOptions options = new FirebaseOptions.Builder()
@@ -97,7 +97,7 @@ class HomeController @Inject() extends Controller {
         .build();
 
       FirebaseApp.initializeApp(options);
-    }
+    }*/
 
     val json = Json.toJson(request.body.asJson)
     Ok((json \ "token").as[String])
