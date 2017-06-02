@@ -56,8 +56,6 @@ class HomeController @Inject() extends Controller {
 
       while (rs.next()) {
         var flight = Flight(rs.getString("id"),rs.getString("origin"),rs.getString("destination"),rs.getString("price"), rs.getString("currency"), rs.getString("hour") +" "+ rs.getString("departure_date"), rs.getString("arrival_date"), rs.getString("passengers"))
-
-
         flights += flight
       }
     } finally {
@@ -73,31 +71,34 @@ class HomeController @Inject() extends Controller {
 
    def reserve = Action { implicit request =>
 
+    var message = "R"
     val json = Json.toJson(request.body.asJson)
     val createReserve = json.validate[Reserve].get
-
     val db = Databases(
       driver = "org.postgresql.Driver",
       url = "jdbc:postgresql://ec2-54-83-49-44.compute-1.amazonaws.com:5432/d4knfn1f5q4rac?user=lfvvtprsytbqlr&password=22ed3b05700ea24f010b53fb45211e9cd6d943f0a0550f3f03aeab57fdae3cbb&sslmode=require"
 
     )
     val conn = db.getConnection()
-
+    val stmt = conn.createStatement
     try {
-      val stmt = conn.createStatement
-      //val rs = stmt.executeQuery("SELECT * FROM flight WHERE origin = '"+searchFlight.origin+"' AND destination = '"+searchFlight.destination+"' AND departure_date = '"+searchFlight.departureDate+"' AND passengers >= "+searchFlight.passengers)
-      //insert into reserve(user_name,flightCode,passengers) values('Andres','1',2);
-      val rs = stmt.executeUpdate("INSERT INTO reserve(user_name,flightCode,passengers) VALUES('"+createReserve.username+"','"+createReserve.flightCode+"',"+createReserve.passengers+");")  
-      //while (rs.next()) {
-        //var flight = Flight(rs.getString("id"),rs.getString("origin"),rs.getString("destination"),rs.getString("price"), rs.getString("currency"), rs.getString("hour") +" "+ rs.getString("departure_date"), rs.getString("arrival_date"), rs.getString("passengers"))
+      val rs = stmt.executeQuery("SELECT * FROM flight WHERE id = '"+createReserve.flightCode+"'")
+       if (rs.next()){
 
-
-        //flights += flight
-      //}
+        if(rs.getString("passengers").toInt < createReserve.passengers ){
+          message = "I"
+        }else{
+          val queryFlight = stmt.executeUpdate("INSERT INTO reserve(user_name,flightCode,passengers) VALUES('"+createReserve.username+"','"+createReserve.flightCode+"',"+createReserve.passengers+");")
+        }
+       }else{
+           message = "NF"
+       }
     } finally {
       conn.close()
     }
-    Ok("ta bem").enableCors
+
+
+    Ok(Json.obj("result"->message)).enableCors
 
   }
 
