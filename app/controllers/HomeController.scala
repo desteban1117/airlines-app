@@ -96,9 +96,7 @@ class HomeController @Inject() extends Controller {
     } finally {
       conn.close()
     }
-
-
-    Ok(Json.obj("result"->message)).enableCors
+    Ok(Json.obj("message"->message)).enableCors
 
   }
 
