@@ -25,7 +25,7 @@ class HomeController @Inject() extends Controller {
    * a path of `/`.
    */
   def index() = Action {
-    Ok("hola muchachos 2")
+    Ok("Bienvenidos a Chan-Airlines")
   }
 
   implicit class RichResult (result: Result) {
