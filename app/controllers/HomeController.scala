@@ -99,7 +99,7 @@ class HomeController @Inject() extends Controller {
     Ok(Json.obj("message"->message)).enableCors
 
   }
-  //Servicio para ver las reservas hechas por un usuario
+  //Servicio para ver las reservas hechas por un user
     def seeReserve(token: String)= Action { 
 
     var flights = ListBuffer[Flight]()
